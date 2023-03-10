@@ -1,13 +1,18 @@
 package br.com.carlos.hn;
 
+import java.util.Arrays;
+
 public class HumanizeNumbers implements IHumanizeNumbers {
+    private String lang;
     private Integer indexScale; 
     private Double divider; 
     private Double base; 
     private String scale; 
-    private Double baseRound; 
+    private Double baseRound;
 
-    private final static String[] SHORT_SCALE = {
+    private final static String[] LANGS = { "pt", "en" };
+
+    private final static String[] SHORT_SCALE_PT = {
         "",
         "Mil",
         "Milhão",
@@ -17,7 +22,28 @@ public class HumanizeNumbers implements IHumanizeNumbers {
         "Quintilhão"
     };
 
-    public HumanizeNumbers() {}
+    private final static String[] SHORT_SCALE_EN = {
+        "",
+        "Thousand",
+        "Million",
+        "Billion",
+        "Trillion",
+        "Quadrillion",
+        "Quintillion"
+    };
+
+    public HumanizeNumbers() {
+        this.lang = "pt";
+    }
+
+    public HumanizeNumbers(String lang) {
+        boolean hasLang = Arrays.stream(LANGS).anyMatch(lang.toLowerCase()::equals);
+        if (hasLang) {
+            this.lang = lang.toLowerCase();
+        } else {
+            this.lang = "pt";
+        }; 
+    }
 
     @Override
     public String execute(Double input, Integer decimals) {
@@ -36,9 +62,22 @@ public class HumanizeNumbers implements IHumanizeNumbers {
 
     @Override
     public String numberIsPlural() {
-        if(this.base <= 2) return SHORT_SCALE[this.indexScale];
+        String[] shortScale = null;
+        String plural = null;
 
-        return SHORT_SCALE[this.indexScale].replace("ão", "ões");
+        if(lang == "pt") {
+            shortScale = SHORT_SCALE_PT;
+            plural = shortScale[this.indexScale].replace("ão", "ões");
+        };
+
+        if(lang == "en") {
+            shortScale = SHORT_SCALE_EN;
+            plural = shortScale[this.indexScale].replace("on", "ons");
+        };
+
+        if(this.base <= 2) return shortScale[this.indexScale];
+
+        return plural;
     }
 
     @Override
