@@ -2,7 +2,7 @@ package br.com.carlos.hn;
 
 import java.util.Arrays;
 
-public class HumanizeNumbers implements IHumanizeNumbers {
+public class HumanizeNumbers<T extends Number> implements IHumanizeNumbers<T> {
     private String lang;
     private Integer indexScale; 
     private Double divider; 
@@ -46,10 +46,18 @@ public class HumanizeNumbers implements IHumanizeNumbers {
     }
 
     @Override
-    public String execute(Double input, Integer decimals) {
-        this.indexScale = (int) Math.ceil(input.toString().length() / 3) - 1;
+    public String execute(T input, Integer decimals) {
+        Double aux = null;
+        
+        if(input.getClass().getName().equals("java.lang.Integer")) {
+            aux = input.doubleValue();
+        } else {
+            aux = (double) input;
+        }
+
+        this.indexScale = (int) Math.ceil(aux.toString().length() / 3) - 1;
         this.divider = Math.pow(10, 3 * this.indexScale);
-        this.base = input / this.divider;
+        this.base = aux / this.divider;
         this.scale = this.numberIsPlural();
         this.baseRound = this.getBaseRound(decimals);
 

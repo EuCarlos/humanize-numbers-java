@@ -1,7 +1,7 @@
 package br.com.carlos.hn;
 
-public interface IHumanizeNumbers {
-    public String execute(Double input, Integer decimals);
+public interface IHumanizeNumbers<T> {
+    public String execute(T input, Integer decimals);
 
     public String numberIsPlural();
 
