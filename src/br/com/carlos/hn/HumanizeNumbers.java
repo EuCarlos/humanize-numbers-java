@@ -2,6 +2,8 @@ package br.com.carlos.hn;
 
 import java.util.Arrays;
 
+import br.com.carlos.hn.interfaces.IHumanizeNumbers;
+
 public class HumanizeNumbers<T extends Number> implements IHumanizeNumbers<T> {
     private String lang;
     private Integer indexScale; 
