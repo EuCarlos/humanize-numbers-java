@@ -26,8 +26,8 @@ Rode o projeto iniciando a classe App que se encontra em `br.com.carlos.hn` no d
 
 #### 2.1 Como usar
 ```java
-HumanizeNumbers hn = new HumanizeNumbers();
-String result = hn.execute(11234567.00, 2);
+HumanizeNumbers<Number> hn = new HumanizeNumbers("pt"); // "pt", "en"
+String result = hn.execute(11234567, 2);
 
 System.out.println(result); // 11,23 Milhões
 ```
