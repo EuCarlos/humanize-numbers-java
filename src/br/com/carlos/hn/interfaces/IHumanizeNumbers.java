@@ -1,4 +1,4 @@
-package br.com.carlos.hn;
+package br.com.carlos.hn.interfaces;
 
 public interface IHumanizeNumbers<T> {
     public String execute(T input, Integer decimals);
